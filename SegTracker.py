@@ -229,6 +229,8 @@ class SegTracker():
 
         # get annotated_frame and boxes
         annotated_frame, boxes = self.detector.run_grounding(origin_frame, grounding_caption, box_threshold, text_threshold)
+        if len(boxes) == 0:
+            refined_merged_mask = np.zeros(origin_frame.shape,dtype=np.uint8)
         for i in range(len(boxes)):
             bbox = boxes[i]
             if (bbox[1][0] - bbox[0][0]) * (bbox[1][1] - bbox[0][1]) > annotated_frame.shape[0] * annotated_frame.shape[1] * box_size_threshold:
